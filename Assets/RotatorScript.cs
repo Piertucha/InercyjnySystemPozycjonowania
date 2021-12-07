@@ -6,18 +6,18 @@ public class RotatorScript : MonoBehaviour
 {
     private Transform transform;
 
-    string xString ="0";
-    string yString="0";
-    string zString="0";
+    string xString = "0";
+    string yString = "0";
+    string zString = "0";
 
     float xAngle = 0f;
-    float yAngle=0f;
-    float zAngle=0f;
+    float yAngle = 0f;
+    float zAngle = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        transform = this.transform;
+        transform = gameObject.transform;
     }
 
 
@@ -65,9 +65,9 @@ public class RotatorScript : MonoBehaviour
         StringToFloat(message);
     }
 
-    void StringToFloat(string string)
+    void StringToFloat(string input)
     {
-        var sStrings = string.Split(" "[0]);
+        var sStrings = input.Split(" "[0]);
 
         xAngle = float.Parse(sStrings[0]);
         yAngle = float.Parse(sStrings[1]);

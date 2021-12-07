@@ -20,7 +20,7 @@ public class SampleUserPolling_ReadWrite : MonoBehaviour
     // Initialization
     void Start()
     {
-        dataToMovementScript = GameObject.GetComponent<dataToMovementScript>();
+        dataToMovementScript = gameObject.GetComponent<DataToMovementScript>();
 
         serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
 
