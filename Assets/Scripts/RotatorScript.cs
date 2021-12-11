@@ -54,7 +54,11 @@ public class RotatorScript : MonoBehaviour
 
     void Accelerate()
     {
+        forceVector = new Vector3(xForce, yForce, zForce);
         rb.AddForce(forceVector);
+        //rb.AddForceAtPosition(forceVector,transform.position);
+        forceVector = Vector3.zero;
+
     }
 
     void StartRotating(float x, float y, float z)
