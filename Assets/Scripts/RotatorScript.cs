@@ -51,7 +51,14 @@ public class RotatorScript : MonoBehaviour
             rotationProgress += Time.deltaTime * 5;
         } */
 
-        transform.rotation = Quaternion.Lerp(startRotation, endRotation, .1f);
+        //transform.rotation = Quaternion.Lerp(startRotation, endRotation, .1f);
+        // TEMP TEST
+        transform.Rotate(xAngle,yAngle,zAngle);
+    }
+    void StartRotating(float x, float y, float z)
+    {
+        startRotation = transform.rotation;
+        endRotation = Quaternion.Euler(x,y,z);
     }
 
     void Accelerate()
@@ -60,13 +67,6 @@ public class RotatorScript : MonoBehaviour
         rb.AddForce(forceVector);
         //rb.AddForceAtPosition(forceVector,transform.position);
         forceVector = Vector3.zero;
-
-    }
-
-    void StartRotating(float x, float y, float z)
-    {
-        startRotation = transform.rotation;
-        endRotation = Quaternion.Euler(x,y,z);
     }
 
     public void GetMessageFromHardware(string message)
