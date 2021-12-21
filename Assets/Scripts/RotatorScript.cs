@@ -16,6 +16,8 @@ public class RotatorScript : MonoBehaviour
     float yForce = 0f;
     float zForce = 0f;
 
+    public float forceScaling = 1f; // multiplies force
+
     private float rotationProgress = -1;
 
     private Vector3 forceVector;
@@ -54,7 +56,7 @@ public class RotatorScript : MonoBehaviour
 
     void Accelerate()
     {
-        forceVector = new Vector3(xForce, yForce, zForce);
+        forceVector = new Vector3(xForce * forceScaling, yForce * forceScaling, zForce * forceScaling);
         rb.AddForce(forceVector);
         //rb.AddForceAtPosition(forceVector,transform.position);
         forceVector = Vector3.zero;
