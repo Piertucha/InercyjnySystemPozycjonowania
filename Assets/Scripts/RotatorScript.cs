@@ -18,6 +18,7 @@ public class RotatorScript : MonoBehaviour
 
     public float forceScaling = 1f; // multiplies force
     public float rotationDampening = 1f; // divides angles
+    public bool rotateByAbsoluteValues = false;
 
     private float rotationProgress = -1;
 
@@ -54,7 +55,15 @@ public class RotatorScript : MonoBehaviour
 
         //transform.rotation = Quaternion.Lerp(startRotation, endRotation, .1f);
         // TEMP TEST
-        transform.Rotate(xAngle / rotationDampening,yAngle / rotationDampening,zAngle / rotationDampening);
+        if (rotateByAbsoluteValues)
+        {
+            transform.Rotate(xAngle / rotationDampening,yAngle / rotationDampening,zAngle / rotationDampening);
+
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(xAngle,yAngle,zAngle);
+        }
         //transform.rotation = Quaternion.Euler(xAngle,yAngle,zAngle);
     }
     void StartRotating(float x, float y, float z)
