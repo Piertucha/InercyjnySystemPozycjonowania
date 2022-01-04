@@ -39,7 +39,7 @@ public class RotatorScript : MonoBehaviour
         Rotate();
         
         if(Input.GetKeyDown(KeyCode.R))
-            ResetCapuslePosition();
+            ResetCapsuleTransform();
     }
 
     private void FixedUpdate()
@@ -104,7 +104,7 @@ public class RotatorScript : MonoBehaviour
 
     }
 
-    void ResetCapuslePosition()
+    void ResetCapsuleTransform()
     {
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
     }
