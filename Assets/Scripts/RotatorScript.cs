@@ -19,6 +19,7 @@ public class RotatorScript : MonoBehaviour
     public float forceScaling = 1f; // multiplies force
     public float rotationDampening = 1f; // divides angles
     public bool rotateByAbsoluteValues = false;
+    public bool useKalmanFilter = true;
 
     private float rotationProgress = -1;
 
@@ -63,11 +64,21 @@ public class RotatorScript : MonoBehaviour
         // TEMP TEST
         if (rotateByAbsoluteValues)
         {
-            xAngle = KalmanFilter.Update(xAngle);
-            yAngle = KalmanFilter.Update(yAngle);
-            zAngle = KalmanFilter.Update(zAngle);
+            //dampen rotations
+            xAngle *= rotationDampening;
+            yAngle *= rotationDampening;
+            zAngle *= rotationDampening;
+            
+            //apply Kalman filter if toggled
+            if (useKalmanFilter)
+            {
+                xAngle = KalmanFilter.Update(xAngle);
+                yAngle = KalmanFilter.Update(yAngle);
+                zAngle = KalmanFilter.Update(zAngle);
+            }
+            
 
-            transform.Rotate(xAngle / rotationDampening,yAngle / rotationDampening,zAngle / rotationDampening);
+            transform.Rotate(xAngle,yAngle,zAngle);
 
         }
         else
@@ -88,10 +99,13 @@ public class RotatorScript : MonoBehaviour
         xForce *= forceScaling;
         yForce *= forceScaling;
         zForce *= forceScaling;
-        // use Kalman filter
-        xForce = KalmanFilter.Update(xForce);
-        yForce = KalmanFilter.Update(yForce);
-        zForce = KalmanFilter.Update(zForce);
+        // use Kalman filter if toggled
+        if (useKalmanFilter)
+        {
+            xForce = KalmanFilter.Update(xForce);
+            yForce = KalmanFilter.Update(yForce);
+            zForce = KalmanFilter.Update(zForce);
+        }
         
         forceVector = new Vector3(xForce, yForce, zForce);
         
