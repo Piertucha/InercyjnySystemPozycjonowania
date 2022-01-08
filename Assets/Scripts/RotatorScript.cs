@@ -27,11 +27,14 @@ public class RotatorScript : MonoBehaviour
     private Quaternion startRotation;
     private Quaternion endRotation;
 
+    public KalmanFilterFloat KalmanFilter;
+
     // Start is called before the first frame update
     void Start()
     {
         transform = gameObject.transform;
         rb = gameObject.GetComponent<Rigidbody>();
+        KalmanFilter = new KalmanFilterFloat();
     }
 
     private void Update()
@@ -44,7 +47,7 @@ public class RotatorScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        StartRotating(xAngle, yAngle, zAngle);
+       //StartRotating(xAngle, yAngle, zAngle);
         Accelerate();
     }
 
@@ -60,6 +63,10 @@ public class RotatorScript : MonoBehaviour
         // TEMP TEST
         if (rotateByAbsoluteValues)
         {
+            xAngle = KalmanFilter.Update(xAngle);
+            yAngle = KalmanFilter.Update(yAngle);
+            zAngle = KalmanFilter.Update(zAngle);
+
             transform.Rotate(xAngle / rotationDampening,yAngle / rotationDampening,zAngle / rotationDampening);
 
         }
@@ -77,7 +84,17 @@ public class RotatorScript : MonoBehaviour
 
     void Accelerate()
     {
-        forceVector = new Vector3(xForce * forceScaling, yForce * forceScaling, zForce * forceScaling);
+        // scale forces
+        xForce *= forceScaling;
+        yForce *= forceScaling;
+        zForce *= forceScaling;
+        // use Kalman filter
+        xForce = KalmanFilter.Update(xForce);
+        yForce = KalmanFilter.Update(yForce);
+        zForce = KalmanFilter.Update(zForce);
+        
+        forceVector = new Vector3(xForce, yForce, zForce);
+        
         rb.AddForce(forceVector);
         //rb.AddForceAtPosition(forceVector,transform.position);
         forceVector = Vector3.zero;
