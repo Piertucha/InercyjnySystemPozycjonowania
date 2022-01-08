@@ -3,6 +3,7 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+[Ll]ogs/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
@@ -35,8 +36,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-*.log
-*.log
 *.log
 .idea/.idea.InercyjnySystemPozycjonowania/.idea/workspace.xml
 .idea/.idea.InercyjnySystemPozycjonowania/.idea/workspace.xml
