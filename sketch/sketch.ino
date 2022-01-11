@@ -1,6 +1,13 @@
 
-
+#include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
 #include "Wire.h" // 
+
+const char* ssid = "Leje Harnolda z Puchy"; //SSID Sieci
+const char* password = "JEBACPEJE2115";  // Hasło Sieci
+char Buf[50];
+WiFiUDP Udp;
+unsigned int localUdpPort = 4210;  // local port to listen on
 
 const int MPU_ADDR = 0x68; 
 
@@ -16,6 +23,19 @@ void setup() {
   Wire.write(0x6B); 
   Wire.write(0); 
   Wire.endTransmission(true);
+  Serial.println();
+
+  Serial.printf("Connecting to %s ", ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println(" connected");
+
+  Udp.begin(localUdpPort);
+  Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
 }
 void loop() {
   Wire.beginTransmission(MPU_ADDR);
@@ -34,6 +54,9 @@ void loop() {
   
   // print out data
  String s =String(gyro_x)+" "+String(gyro_y)+" "+String(gyro_z)+" "+ String(accelerometer_x)+" "+ String(accelerometer_y)+" "+String(accelerometer_z);
-  Serial.println(s);
-  
+// Serial.println(s);
+ s.toCharArray(Buf,50);
+  Udp.beginPacket("192.168.0.105",60784); //Ip i port odbiornika
+  Udp.write(Buf);
+  Udp.endPacket();
 }
