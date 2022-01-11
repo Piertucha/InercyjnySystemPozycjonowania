@@ -15,6 +15,12 @@ public class RotatorScript : MonoBehaviour
     float xForce = 0f;
     float yForce = 0f;
     float zForce = 0f;
+    
+    // Kalman Filter values
+    [Header("Kalman Filter")]
+    public float q = 0.000001f;
+    public float r = 0.01f;
+    [Space(20)]
 
     public float forceScaling = 1f; // multiplies force
     public float rotationDampening = 1f; // divides angles
@@ -35,7 +41,7 @@ public class RotatorScript : MonoBehaviour
     {
         transform = gameObject.transform;
         rb = gameObject.GetComponent<Rigidbody>();
-        KalmanFilter = new KalmanFilterFloat();
+        KalmanFilter = new KalmanFilterFloat(q, r);
     }
 
     private void Update()
