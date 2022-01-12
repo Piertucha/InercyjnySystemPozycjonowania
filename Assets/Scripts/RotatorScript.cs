@@ -85,6 +85,7 @@ public class RotatorScript : MonoBehaviour
             
 
             transform.Rotate(xAngle,yAngle,zAngle);
+            //Debug.Log(xAngle+" "+yAngle+" "+zAngle);
 
         }
         else
