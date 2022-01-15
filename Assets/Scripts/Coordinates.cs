@@ -13,9 +13,10 @@ public class Coordinates : MonoBehaviour
         this.y = y;
     }
 
-    static public void DrawCartesianPlane(Coordinates originPos, Coordinates endPos, Color color, float width, float zPosition)
+    static public void DrawCartesianPlane(Coordinates originPos, Coordinates endPos, Color color, float width, float zPosition, GameObject parent)
     {
         GameObject line = new GameObject();
+        line.transform.parent = parent.transform;
         LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Unlit/Color"));
         lineRenderer.material.color = color;
