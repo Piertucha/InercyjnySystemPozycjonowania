@@ -56,7 +56,7 @@ void loop() {
  String s =String(gyro_x)+" "+String(gyro_y)+" "+String(gyro_z)+" "+ String(accelerometer_x)+" "+ String(accelerometer_y)+" "+String(accelerometer_z);
 // Serial.println(s);
  s.toCharArray(Buf,50);
-  Udp.beginPacket("192.168.0.105",60784); //Ip i port odbiornika
+  Udp.beginPacket("192.168.0.105",50505); //Ip i port odbiornika
   Udp.write(Buf);
   Udp.endPacket();
 }
