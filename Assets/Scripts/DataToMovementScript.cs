@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DataToMovementScript : MonoBehaviour
 {
+    public bool enableCOMCommunication = false;
+    
     private RotatorScript rotator;
 
     void Start()
@@ -13,6 +15,7 @@ public class DataToMovementScript : MonoBehaviour
 
     public void SendSerialMessage(string message)
     {
-        rotator.GetMessageFromHardware(message);
+        if(enableCOMCommunication)
+            rotator.GetMessageFromHardware(message);
     }
 }

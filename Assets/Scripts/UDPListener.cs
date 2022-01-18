@@ -54,6 +54,7 @@ public class UDPListener : MonoBehaviour
     {
         // work with receivedBytes
         Debug.Log("receivedBytes len = " + receivedBytes.Length);
+        Debug.Log("Received Message: " + receivedBytes);
     }
 
     void OnDestroy()
