@@ -425,6 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b149ea5d0c552941a12cd9c6530b2f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotatorScript: {fileID: 1122630983}
   receiveBufferSize: 120000
   showDebug: 1
 --- !u!4 &721144630
@@ -498,6 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82fff93e9fea9644a1a636e9f2b3a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCOMCommunication: 0
 --- !u!1 &892457334
 GameObject:
   m_ObjectHideFlags: 0

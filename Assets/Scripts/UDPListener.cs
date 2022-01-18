@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class UDPListener : MonoBehaviour
 {
+    public RotatorScript rotatorScript;
+    
     UdpClient clientData;
     int portData = 50505;
     public int receiveBufferSize = 120000;
@@ -55,7 +57,8 @@ public class UDPListener : MonoBehaviour
         // work with receivedBytes
         Debug.Log("receivedBytes len = " + receivedBytes.Length);
         var str = System.Text.Encoding.Default.GetString(receivedBytes);
-        Debug.Log("Received Message: " + str);
+        
+        rotatorScript.GetMessageFromHardware(str);
     }
 
     void OnDestroy()
