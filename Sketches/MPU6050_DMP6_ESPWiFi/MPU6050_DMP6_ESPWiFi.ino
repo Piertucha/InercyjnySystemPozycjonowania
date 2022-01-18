@@ -141,8 +141,8 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 const char DEVICE_NAME[] = "mpu6050";
 
 WiFiUDP Udp;                                // A UDP instance to let us send and receive packets over UDP
-const IPAddress outIp(192, 168, 1, 11);     // remote IP to receive OSC
-const unsigned int outPort = 9999;          // remote port to receive OSC
+const IPAddress outIp(192, 168, 0, 105);     // remote IP to receive OSC
+const unsigned int outPort = 50505;          // remote port to receive OSC
 
 // ================================================================
 // ===               INTERRUPT DETECTION ROUTINE                ===
