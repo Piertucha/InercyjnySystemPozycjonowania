@@ -59,6 +59,7 @@ public class UDPListener : MonoBehaviour
         var str = System.Text.Encoding.Default.GetString(receivedBytes);
         
         rotatorScript.GetMessageFromHardware(str);
+        Debug.Log("UDP Message: " + str);
     }
 
     void OnDestroy()
