@@ -54,6 +54,8 @@ public class CartesianPlane : MonoBehaviour
             // left
             startPointY = new Coordinates(i * -1 * lineSpacing, 100);
             endPointY = new Coordinates(i * -1 * lineSpacing, -100);
-            Coordinates.DrawCartesianPlane(startPointY,endPointY,lineColor, lineThickness, zPosition, lineParent);        }
+            Coordinates.DrawCartesianPlane(startPointY,endPointY,lineColor, lineThickness, zPosition, lineParent);
+            
+        }
     }
 }
