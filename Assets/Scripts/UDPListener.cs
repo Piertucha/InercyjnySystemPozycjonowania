@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using UnityEngine;
 
 public class UDPListener : MonoBehaviour
@@ -9,7 +10,7 @@ public class UDPListener : MonoBehaviour
     public RotatorScript rotatorScript;
     
     UdpClient clientData;
-    int portData = 50505;
+    int portData = 54687;
     public int receiveBufferSize = 120000;
 
     public bool showDebug = false;
@@ -36,6 +37,9 @@ public class UDPListener : MonoBehaviour
         AC = new System.AsyncCallback(ReceivedUDPPacket);
         clientData.BeginReceive(AC, obj);
         Debug.Log("UDP - Start Receiving..");
+
+        byte[] sendBytes = Encoding.ASCII.GetBytes("Is anybody there");
+        clientData.Send(sendBytes,sendBytes.Length, "192.168.173.78", 4210);
     }
 
     void ReceivedUDPPacket(System.IAsyncResult result)
