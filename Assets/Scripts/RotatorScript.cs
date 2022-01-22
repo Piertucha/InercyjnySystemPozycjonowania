@@ -15,6 +15,10 @@ public class RotatorScript : MonoBehaviour
     float xForce = 0f;
     float yForce = 0f;
     float zForce = 0f;
+
+    public Vector3 gravityCompensator = new Vector3(0, 9.81f, 0);
+
+    public UIText uiText;
     
     // Kalman Filter values
     [Header("Kalman Filter")]
@@ -103,9 +107,11 @@ public class RotatorScript : MonoBehaviour
     void Accelerate()
     {
         // scale forces
+        /*
         xForce *= forceScaling;
         yForce *= forceScaling;
         zForce *= forceScaling;
+        */
         // use Kalman filter if toggled
         if (useKalmanFilter)
         {
@@ -114,9 +120,29 @@ public class RotatorScript : MonoBehaviour
             zForce = KalmanFilter.Update(zForce);
         }
         
-        forceVector = new Vector3(xForce, yForce, zForce);
         
-        rb.AddForce(forceVector);
+        
+        
+        forceVector = new Vector3(xForce, yForce, zForce);
+        forceVector += gravityCompensator.y * transform.up;
+
+        uiText.forceVector = forceVector;
+
+        if (forceVector.x <= 1f && forceVector.x >= -1f)
+        {
+            forceVector.x = 0;
+        }
+        if (forceVector.y <= 1f && forceVector.y >= -1f)
+        {
+            forceVector.y = 0;
+        }
+        if (forceVector.z <= 1f && forceVector.z >= -1f)
+        {
+            forceVector.z = 0;
+        }
+        
+        //rb.AddForce(forceVector * forceScaling);
+        rb.AddForce(forceVector * forceScaling, ForceMode.Impulse);
         //rb.AddForceAtPosition(forceVector,transform.position);
         forceVector = Vector3.zero;
     }
@@ -142,11 +168,11 @@ public class RotatorScript : MonoBehaviour
         zForce = float.Parse(sStrings[4]);
         yForce = float.Parse(sStrings[5]);
 
-        xForce -= 5.80f;
-        zForce += 4.8f;
+        //xForce -= 5.80f;
+        //zForce += 4.8f;
 
         // gravity
-        yForce -= 9.81f;
+        //yForce -= 9.81f;
         
         //invert forces
         xForce *= -1f;

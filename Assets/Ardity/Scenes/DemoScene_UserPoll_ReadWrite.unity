@@ -625,6 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capsuleTransform: {fileID: 1122630987}
+  forceVector: {x: 0, y: 0, z: 0}
 --- !u!114 &838320577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -802,6 +803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96df51ad9cd4d147bdb05b0634dd84c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityCompensator: {x: 0, y: 9.81, z: 0}
+  uiText: {fileID: 838320576}
   q: 0.000001
   r: 0.01
   forceScaling: 1
