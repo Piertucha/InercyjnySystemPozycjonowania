@@ -7,6 +7,8 @@ public class RotatorScript : MonoBehaviour
 {
     private Transform transform;
     private Rigidbody rb;
+    
+    public float forceMargin = 0.2f;
 
     float xAngle = 0f;
     float yAngle = 0f;
@@ -119,32 +121,44 @@ public class RotatorScript : MonoBehaviour
             yForce = KalmanFilter.Update(yForce);
             zForce = KalmanFilter.Update(zForce);
         }
-        
-        
-        
-        
+
+
+
         forceVector = new Vector3(xForce, yForce, zForce);
-        forceVector += gravityCompensator.y * transform.up;
+        
+        forceVector += Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
+        //forceVector += gravityCompensator.y * transform.up;
+        /*
+        forceVector += new Vector3(gravityCompensator.y * Vector3.Dot(transform.right,
+                Vector3.down), gravityCompensator.y * Vector3.Dot(transform.up, Vector3.up), gravityCompensator.y *
+            Vector3.Dot(transform.forward,
+                Vector3.down));*/
+        
+        Debug.Log(Vector3.Dot(transform.right,
+            Vector3.up).ToString() + " " + Vector3.Dot(transform.up, Vector3.up).ToString() + " " + Vector3.Dot(transform.forward,
+                Vector3.up).ToString());
 
         uiText.forceVector = forceVector;
 
-        if (forceVector.x <= 1f && forceVector.x >= -1f)
+        if (forceVector.x <= forceMargin && forceVector.x >= -forceMargin)
         {
             forceVector.x = 0;
         }
-        if (forceVector.y <= 1f && forceVector.y >= -1f)
+        if (forceVector.y <= forceMargin && forceVector.y >= -forceMargin)
         {
             forceVector.y = 0;
         }
-        if (forceVector.z <= 1f && forceVector.z >= -1f)
+        if (forceVector.z <= forceMargin && forceVector.z >= -forceMargin)
         {
             forceVector.z = 0;
         }
+
+        rb.velocity -= forceVector * forceScaling;
         
         //rb.AddForce(forceVector * forceScaling);
-        rb.AddForce(forceVector * forceScaling, ForceMode.Impulse);
+        //rb.AddForce(forceVector * forceScaling, ForceMode.Impulse);
         //rb.AddForceAtPosition(forceVector,transform.position);
-        forceVector = Vector3.zero;
+        //forceVector = Vector3.zero;
     }
 
     public void GetMessageFromHardware(string message)
@@ -185,5 +199,6 @@ public class RotatorScript : MonoBehaviour
     void ResetCapsuleTransform()
     {
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        rb.velocity = Vector3.zero;
     }
 }

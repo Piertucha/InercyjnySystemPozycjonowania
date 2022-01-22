@@ -59,11 +59,11 @@ public class UDPListener : MonoBehaviour
     void ParsePacket()
     {
         // work with receivedBytes
-        Debug.Log("receivedBytes len = " + receivedBytes.Length);
+        //Debug.Log("receivedBytes len = " + receivedBytes.Length);
         var str = System.Text.Encoding.Default.GetString(receivedBytes);
         
         rotatorScript.GetMessageFromHardware(str);
-        Debug.Log("UDP Message: " + str);
+        //Debug.Log("UDP Message: " + str);
     }
 
     void OnDestroy()
