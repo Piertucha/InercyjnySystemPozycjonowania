@@ -804,8 +804,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   q: 0.000001
   r: 0.01
-  forceScaling: 0.00001
-  rotationDampening: 100000
+  forceScaling: 1
+  rotationDampening: 1
   rotateByAbsoluteValues: 0
   useKalmanFilter: 0
 --- !u!136 &1122630984

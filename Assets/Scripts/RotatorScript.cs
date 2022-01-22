@@ -132,13 +132,27 @@ public class RotatorScript : MonoBehaviour
         
         var sStrings = input.Split(" "[0]);
 
+
+        // swap y and z axis
         xAngle = float.Parse(sStrings[0]);
-        yAngle = float.Parse(sStrings[1]);
-        zAngle = float.Parse(sStrings[2]);
+        zAngle = float.Parse(sStrings[1]);
+        yAngle = float.Parse(sStrings[2]);
         
         xForce = float.Parse(sStrings[3]);
-        yForce = float.Parse(sStrings[4]);
-        zForce = float.Parse(sStrings[5]);
+        zForce = float.Parse(sStrings[4]);
+        yForce = float.Parse(sStrings[5]);
+
+        xForce -= 5.80f;
+        zForce += 4.8f;
+
+        // gravity
+        yForce -= 9.81f;
+        
+        //invert forces
+        xForce *= -1f;
+        zForce *= -1f;
+        yForce *= -1f;
+        
 
     }
 
