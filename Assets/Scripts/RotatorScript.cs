@@ -126,9 +126,9 @@ public class RotatorScript : MonoBehaviour
 
         forceVector = new Vector3(xForce, yForce, zForce);
         forceVector = Quaternion.Euler(xAngle, yAngle, zAngle) * forceVector;
-        //forceVector -= gravityCompensator;
+        forceVector -= gravityCompensator.y * transform.up;
         
-        forceVector -= Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
+        //forceVector -= Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
         //forceVector += gravityCompensator.y * transform.up;
         /*
         forceVector += new Vector3(gravityCompensator.y * Vector3.Dot(transform.right,
