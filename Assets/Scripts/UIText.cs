@@ -7,6 +7,7 @@ public class UIText : MonoBehaviour
 {
     private TextMeshProUGUI Text;
     public Transform capsuleTransform;
+    public Vector3 forceVector = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,11 @@ public class UIText : MonoBehaviour
     void Update()
     {
         Text.SetText("Position: " + capsuleTransform.position.ToString()+ "\n"
-                                                                           +"Rotation: " + capsuleTransform.rotation.ToString());
+                                                                           +"Rotation: " + capsuleTransform.rotation.ToString()
+                                                                           + "\n"
+                                                                           + forceVector.x.ToString() + "\n"
+                                                                           + forceVector.y.ToString() + "\n"
+                                                                           + forceVector.z.ToString());
         
         
     }
