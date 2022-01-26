@@ -125,6 +125,7 @@ public class RotatorScript : MonoBehaviour
 
 
         forceVector = new Vector3(xForce, yForce, zForce);
+        forceVector = Quaternion.Euler(xAngle, yAngle, zAngle) * forceVector;
         
         forceVector += Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
         //forceVector += gravityCompensator.y * transform.up;
@@ -153,7 +154,7 @@ public class RotatorScript : MonoBehaviour
             forceVector.z = 0;
         }
 
-        rb.velocity -= forceVector * forceScaling;
+        rb.velocity += forceVector * forceScaling;
         
         //rb.AddForce(forceVector * forceScaling);
         //rb.AddForce(forceVector * forceScaling, ForceMode.Impulse);
@@ -187,12 +188,12 @@ public class RotatorScript : MonoBehaviour
 
         // gravity
         //yForce -= 9.81f;
-        
+        /*
         //invert forces
         xForce *= -1f;
         zForce *= -1f;
         yForce *= -1f;
-        
+        */
 
     }
 
