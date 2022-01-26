@@ -3,8 +3,8 @@
 #include <WiFiUdp.h>
 #include "Wire.h" // 
 
-const char* ssid = "Leje Harnolda z Puchy"; //SSID Sieci
-const char* password = "JEBACPEJE2115";  // Hasło Sieci
+const char* ssid = "Pixel Hotspot"; //SSID Sieci
+const char* password = "thereisNOgod";  // Hasło Sieci
 char Buf[50];
 WiFiUDP Udp;
 unsigned int localUdpPort = 4210;  // local port to listen on
@@ -121,7 +121,6 @@ dt=(millis()-pdt)*0.001;
   //Filtr Kalmana
   kal_angle_x=(0.98f*(norm_acc_x + norm_gyro_x*dt))+(0.98f*acc_roll);
   kal_angle_y=(0.98f*(norm_acc_y + norm_gyro_y*dt))+(0.98f*acc_pitch);
-  norm_gyro_z-=norm_gyro_z*dt;
   kal_angle_z=norm_gyro_z;
   pdt=millis();
   
@@ -129,7 +128,7 @@ dt=(millis()-pdt)*0.001;
  String s =String(kal_angle_x)+" "+String(kal_angle_y)+" "+String(kal_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
 // Serial.println(s);
  s.toCharArray(Buf,50);
-  Udp.beginPacket("192.168.0.105",59022); //Ip i port odbiornika
+  Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
   Udp.write(Buf);
   Udp.endPacket();
 }
