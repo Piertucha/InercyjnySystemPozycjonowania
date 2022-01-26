@@ -1,12 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class RotatorScript : MonoBehaviour
 {
     private Transform transform;
     private Rigidbody rb;
+    public TextMeshProUGUI calibratingText;
+
+    private bool beginCalibration = false;
+    private float[] yArray = new float[2000];
+    private float[] xArray = new float[2000];
+    private float[] zArray = new float[2000];
     
     public float forceMargin = 0.2f;
 
@@ -19,6 +27,8 @@ public class RotatorScript : MonoBehaviour
     float zForce = 0f;
 
     public Vector3 gravityCompensator = new Vector3(0, 9.81f, 0);
+    [SerializeField]
+    private Vector3 errorCompensator = new Vector3(0, 0, 0);
 
     public UIText uiText;
     
@@ -48,6 +58,8 @@ public class RotatorScript : MonoBehaviour
         transform = gameObject.transform;
         rb = gameObject.GetComponent<Rigidbody>();
         KalmanFilter = new KalmanFilterFloat(q, r);
+
+        StartCoroutine(WaitXTime(5));
     }
 
     private void Update()
@@ -124,11 +136,13 @@ public class RotatorScript : MonoBehaviour
 
 
 
-        forceVector = new Vector3(xForce, yForce, zForce);
+        forceVector = new Vector3(xForce - errorCompensator.x, yForce - errorCompensator.y, zForce - errorCompensator.z);
+        //forceVector.y -= gravityCompensator.y;
+        forceVector -= Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
+
         forceVector = Quaternion.Euler(xAngle, yAngle, zAngle) * forceVector;
-        forceVector -= gravityCompensator.y * transform.up;
         
-        //forceVector -= Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
+        
         //forceVector += gravityCompensator.y * transform.up;
         /*
         forceVector += new Vector3(gravityCompensator.y * Vector3.Dot(transform.right,
@@ -151,10 +165,15 @@ public class RotatorScript : MonoBehaviour
         {
             forceVector.z = 0;
         }
+        
 
-        rb.velocity += forceVector * forceScaling;
+        //rb.velocity += forceVector * forceScaling;
         
         //rb.AddForce(forceVector * forceScaling);
+        
+        
+        
+        rb.AddForce(NewFilter(forceVector * forceScaling));
         //rb.AddForce(forceVector * forceScaling, ForceMode.Impulse);
         //rb.AddForceAtPosition(forceVector,transform.position);
         //forceVector = Vector3.zero;
@@ -180,7 +199,7 @@ public class RotatorScript : MonoBehaviour
         xForce = float.Parse(sStrings[3]);
         zForce = float.Parse(sStrings[4]);
         yForce = float.Parse(sStrings[5]);
-
+        
         //xForce -= 5.80f;
         //zForce += 4.8f;
 
@@ -199,5 +218,51 @@ public class RotatorScript : MonoBehaviour
     {
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         rb.velocity = Vector3.zero;
+    }
+
+    void CalibrateGravity()
+    {
+        Vector3 tempGravityRotated = Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
+        for (int i = 0; i < 2000; i++)
+        {
+            xArray[i] = xForce - tempGravityRotated.x;
+            yArray[i] = yForce - tempGravityRotated.y;
+            zArray[i] = zForce - tempGravityRotated.z;
+        }
+
+        errorCompensator.x = xArray.Average();
+        errorCompensator.y = yArray.Average();
+        errorCompensator.z = zArray.Average();
+        
+        ResetCapsuleTransform();
+        calibratingText.gameObject.SetActive(false);
+    }
+
+    IEnumerator WaitXTime(float amount)
+    {
+        yield return new WaitForSeconds(amount);
+        beginCalibration = true;
+        
+        //calibrate after X seconds
+        CalibrateGravity();
+    }
+
+    Vector3 NewFilter(Vector3 inputVector)
+    {
+        Vector3 result;
+        Vector3 minus = new Vector3(-1f, -1f, -1f);
+        
+        if (inputVector.x >= 0)
+            minus.x = 1f;
+        if (inputVector.y >= 0)
+            minus.y = 1f;
+        if (inputVector.z >= 0)
+            minus.z = 1f;
+        result = new Vector3(inputVector.x * inputVector.x * minus.x,
+            inputVector.y * inputVector.y * minus.y,
+            inputVector.z * inputVector.z * minus.z);
+
+        return result;
+
     }
 }

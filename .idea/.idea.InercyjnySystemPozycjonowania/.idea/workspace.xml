@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dcb54e58-ce62-4dca-99fe-8e1fdd9094af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" afterDir="false" />
-    </list>
+    <list default="true" id="dcb54e58-ce62-4dca-99fe-8e1fdd9094af" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -90,6 +88,7 @@
       <workItem from="1643107768219" duration="3088000" />
       <workItem from="1643128927522" duration="1862000" />
       <workItem from="1643215383060" duration="367000" />
+      <workItem from="1643216240209" duration="7447000" />
     </task>
     <servers />
   </component>
