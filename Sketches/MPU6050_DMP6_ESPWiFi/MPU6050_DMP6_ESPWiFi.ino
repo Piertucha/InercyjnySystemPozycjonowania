@@ -126,7 +126,7 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 
 // uncomment "OUTPUT_TEAPOT_OSC" if you want output that matches the
 // format used for the InvenSense teapot demo
-#define OUTPUT_TEAPOT_OSC
+//#define OUTPUT_TEAPOT_OSC
 
 
 #ifdef OUTPUT_READABLE_EULER

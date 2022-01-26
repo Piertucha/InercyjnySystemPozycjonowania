@@ -42,6 +42,7 @@ public class RotatorScript : MonoBehaviour
     public float rotationDampening = 1f; // divides angles
     public bool rotateByAbsoluteValues = false;
     public bool useKalmanFilter = true;
+    public bool useNewFilter = false;
 
     private float rotationProgress = -1;
 
@@ -108,9 +109,16 @@ public class RotatorScript : MonoBehaviour
         }
         else
         {
-            transform.rotation = Quaternion.Euler(xAngle,yAngle,zAngle);
+            //Vector3 eulers = new Vector3(xAngle, transform.rotation.y, zAngle);
+            
+            
+            //transform.rotation = Quaternion.Euler(xAngle,yAngle,zAngle);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, yAngle, zAngle),
+                Time.deltaTime * 5f);
+
+            //transform.rotation = Quaternion.Euler(eulers);
+            //transform.Rotate(0,yAngle,0);
         }
-        //transform.rotation = Quaternion.Euler(xAngle,yAngle,zAngle);
     }
     void StartRotating(float x, float y, float z)
     {
@@ -152,7 +160,7 @@ public class RotatorScript : MonoBehaviour
 
 
         uiText.forceVector = forceVector;
-
+/*
         if (forceVector.x <= forceMargin && forceVector.x >= -forceMargin)
         {
             forceVector.x = 0;
@@ -164,7 +172,7 @@ public class RotatorScript : MonoBehaviour
         if (forceVector.z <= forceMargin && forceVector.z >= -forceMargin)
         {
             forceVector.z = 0;
-        }
+        }*/
         
 
         //rb.velocity += forceVector * forceScaling;
@@ -172,11 +180,15 @@ public class RotatorScript : MonoBehaviour
         //rb.AddForce(forceVector * forceScaling);
         
         
-        
-        rb.AddForce(NewFilter(forceVector * forceScaling));
+        if(useNewFilter)
+            rb.AddForce(NewFilter(forceVector * forceScaling));
+        else
+        {
+            rb.AddForce(forceVector * forceScaling);
+        }
         //rb.AddForce(forceVector * forceScaling, ForceMode.Impulse);
         //rb.AddForceAtPosition(forceVector,transform.position);
-        //forceVector = Vector3.zero;
+        forceVector = Vector3.zero;
     }
 
     public void GetMessageFromHardware(string message)
@@ -200,18 +212,7 @@ public class RotatorScript : MonoBehaviour
         zForce = float.Parse(sStrings[4]);
         yForce = float.Parse(sStrings[5]);
         
-        //xForce -= 5.80f;
-        //zForce += 4.8f;
-
-        // gravity
-        //yForce -= 9.81f;
-        /*
-        //invert forces
-        xForce *= -1f;
-        zForce *= -1f;
-        yForce *= -1f;
-        */
-
+        Debug.Log(yAngle);
     }
 
     void ResetCapsuleTransform()
