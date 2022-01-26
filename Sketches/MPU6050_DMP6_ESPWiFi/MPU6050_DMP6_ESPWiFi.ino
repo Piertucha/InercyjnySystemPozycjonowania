@@ -96,7 +96,7 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 // uncomment "OUTPUT_READABLE_QUATERNION" if you want to see the actual
 // quaternion components in a [w, x, y, z] format (not best for parsing
 // on a remote host such as Processing or something though)
-//#define OUTPUT_READABLE_QUATERNION
+#define OUTPUT_READABLE_QUATERNION
 
 // uncomment "OUTPUT_READABLE_EULER" if you want to see Euler angles
 // (in degrees) calculated from the quaternions coming from the FIFO.
@@ -116,7 +116,7 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 // not compensated for orientation, so +X is always +X according to the
 // sensor, just without the effects of gravity. If you want acceleration
 // compensated for orientation, us OUTPUT_READABLE_WORLDACCEL instead.
-//#define OUTPUT_READABLE_REALACCEL
+#define OUTPUT_READABLE_REALACCEL
 
 // uncomment "OUTPUT_READABLE_WORLDACCEL" if you want to see acceleration
 // components with gravity removed and adjusted for the world frame of
@@ -141,8 +141,8 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 const char DEVICE_NAME[] = "mpu6050";
 
 WiFiUDP Udp;                                // A UDP instance to let us send and receive packets over UDP
-const IPAddress outIp(192, 168, 0, 105);     // remote IP to receive OSC
-const unsigned int outPort = 50505;          // remote port to receive OSC
+const IPAddress outIp(192, 168, 173, 113);     // remote IP to receive OSC
+const unsigned int outPort = 54687;          // remote port to receive OSC
 
 // ================================================================
 // ===               INTERRUPT DETECTION ROUTINE                ===
