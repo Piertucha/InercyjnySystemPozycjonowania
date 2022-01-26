@@ -121,6 +121,7 @@ dt=(millis()-pdt)*0.001;
   //Filtr Kalmana
   kal_angle_x=(0.98f*(norm_acc_x + norm_gyro_x*dt))+(0.98f*acc_roll);
   kal_angle_y=(0.98f*(norm_acc_y + norm_gyro_y*dt))+(0.98f*acc_pitch);
+  norm_gyro_z += norm_gyro_z * dt;
   kal_angle_z=norm_gyro_z;
   pdt=millis();
   
