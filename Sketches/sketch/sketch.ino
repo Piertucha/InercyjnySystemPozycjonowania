@@ -126,7 +126,7 @@ dt=(millis()-pdt)*0.001;
   pdt=millis();
   
   // print out data
- String s =String(kal_angle_x)+" "+String(kal_angle_y)+" "+String(kal_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+ String s =String(kal_angle_x)+" "+String(kal_angle_y)+" "+String(kal_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z) + " "+String(norm_gyro_x)+" "+String(norm_gyro_y);
 Serial.println(s);
  s.toCharArray(Buf,50);
   Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
