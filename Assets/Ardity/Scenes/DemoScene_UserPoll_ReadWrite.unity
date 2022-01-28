@@ -905,7 +905,7 @@ MonoBehaviour:
   uiText: {fileID: 838320576}
   q: 0.000001
   r: 0.01
-  forceScaling: 1
+  forceScaling: 2
   rotationDampening: 1
   rotateByAbsoluteValues: 0
   useKalmanFilter: 0
