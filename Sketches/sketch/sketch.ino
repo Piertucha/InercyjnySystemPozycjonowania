@@ -119,14 +119,14 @@ void loop() {
   acc_roll = (atan2(norm_acc_y, norm_acc_z))*180.0/PI;
 
 dt=(millis()-pdt)*0.001;
-  //Filtr Kalmana
+  //Kalkulacja kątów X i Y metodą filtru komplementarnego oraz kątu Z bez filtrów, bo się nie da
   kal_angle_x=(0.98f*(norm_acc_x + norm_gyro_x*dt))+(0.98f*acc_roll);
   kal_angle_y=(0.98f*(norm_acc_y + norm_gyro_y*dt))+(0.98f*acc_pitch);
   kal_angle_z=kal_angle_z + norm_gyro_z*dt;
   pdt=millis();
   
   // print out data
- String s =String(kal_angle_x)+" "+String(kal_angle_y)+" "+String(kal_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z) + " "+String(norm_gyro_x)+" "+String(norm_gyro_y)+ " " +String(dt);
+ String s =String(kal_angle_x)+" "+String(kal_angle_y)+" "+String(kal_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
 Serial.println(s);
  s.toCharArray(Buf,50);
   Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
