@@ -14,7 +14,7 @@ const int MPU_ADDR = 0x68;
 int16_t raw_acc_x, raw_acc_y, raw_acc_z; 
 int16_t raw_gyro_x, raw_gyro_y, raw_gyro_z; 
 int16_t temperature; 
-float d_gyro_x, d_gyro_y, d_gyro_z, th_gyro_x, th_gyro_y, th_gyro_z, norm_acc_x, norm_acc_y, norm_acc_z, norm_gyro_x, norm_gyro_y, norm_gyro_z,acc_pitch, acc_roll, kal_angle_x, kal_angle_y, kal_angle_z;
+float d_gyro_x, d_gyro_y, d_gyro_z, th_gyro_x, th_gyro_y, th_gyro_z, norm_acc_x, norm_acc_y, norm_acc_z, norm_gyro_x, norm_gyro_y, norm_gyro_z,acc_pitch, acc_roll, kal_angle_x, kal_angle_y, kal_angle_z=0;
 float pdt, dt;
 
 
@@ -59,7 +59,7 @@ void setup() {
       sigmaX+=(float)raw_gyro_x*(float)raw_gyro_x;
       sigmaY+=(float)raw_gyro_y*(float)raw_gyro_y;
       sigmaZ+=(float)raw_gyro_z*(float)raw_gyro_z;
-
+      
       delay(5);
       }
 
@@ -71,7 +71,8 @@ th_gyro_x=sqrt((sigmaX / 50) - (d_gyro_x * d_gyro_x));
 th_gyro_y=sqrt((sigmaY / 50) - (d_gyro_y * d_gyro_y));
 th_gyro_z=sqrt((sigmaZ / 50) - (d_gyro_z * d_gyro_z));
 
-
+String x =String(d_gyro_x)+" "+String(d_gyro_y)+" "+String(d_gyro_z)+" "+ String(th_gyro_x)+" "+ String(th_gyro_y)+" "+String(th_gyro_z);
+Serial.println(x);
 //Łączenie z siecią
   Serial.printf("Connecting to %s ", ssid);
   WiFi.begin(ssid, password);
@@ -121,12 +122,11 @@ dt=(millis()-pdt)*0.001;
   //Filtr Kalmana
   kal_angle_x=(0.98f*(norm_acc_x + norm_gyro_x*dt))+(0.98f*acc_roll);
   kal_angle_y=(0.98f*(norm_acc_y + norm_gyro_y*dt))+(0.98f*acc_pitch);
-  norm_gyro_z += norm_gyro_z * dt;
-  kal_angle_z=norm_gyro_z;
+  kal_angle_z=kal_angle_z + norm_gyro_z*dt;
   pdt=millis();
   
   // print out data
- String s =String(kal_angle_x)+" "+String(kal_angle_y)+" "+String(kal_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z) + " "+String(norm_gyro_x)+" "+String(norm_gyro_y);
+ String s =String(kal_angle_x)+" "+String(kal_angle_y)+" "+String(kal_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z) + " "+String(norm_gyro_x)+" "+String(norm_gyro_y)+ " " +String(dt);
 Serial.println(s);
  s.toCharArray(Buf,50);
   Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
