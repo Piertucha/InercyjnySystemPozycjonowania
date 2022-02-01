@@ -14,9 +14,9 @@ const int MPU_ADDR = 0x68;
 int16_t raw_acc_x, raw_acc_y, raw_acc_z; 
 int16_t raw_gyro_x, raw_gyro_y, raw_gyro_z; 
 int16_t temperature; 
-float d_gyro_x, d_gyro_y, d_gyro_z, th_gyro_x, th_gyro_y, th_gyro_z, norm_acc_x, norm_acc_y, norm_acc_z, norm_gyro_x, norm_gyro_y, norm_gyro_z,acc_pitch, acc_roll, kal_angle_x, kal_angle_y, kal_angle_z=0;
+float d_gyro_x, d_gyro_y, d_gyro_z, th_gyro_x, th_gyro_y, th_gyro_z, norm_acc_x, norm_acc_y, norm_acc_z, norm_gyro_x, norm_gyro_y, norm_gyro_z,acc_pitch, acc_roll, kom_angle_x, kom_angle_y, bez_angle_x=0, bez_angle_y=0, bez_angle_z=0;
 float pdt, dt;
-
+String s;
 
 void setup() {
   Serial.begin(9600);
@@ -119,14 +119,22 @@ void loop() {
   acc_roll = (atan2(norm_acc_y, norm_acc_z))*180.0/PI;
 
 dt=(millis()-pdt)*0.001;
-  //Kalkulacja kątów X i Y metodą filtru komplementarnego oraz kątu Z bez filtrów, bo się nie da
-  kal_angle_x=(0.98f*(norm_acc_x + norm_gyro_x*dt))+(0.98f*acc_roll);
-  kal_angle_y=(0.98f*(norm_acc_y + norm_gyro_y*dt))+(0.98f*acc_pitch);
-  kal_angle_z=kal_angle_z + norm_gyro_z*dt;
+  //Kalkulacja kątów X i Y metodą filtru komplementarnego
+  kom_angle_x=(0.98f*(norm_acc_x + norm_gyro_x*dt))+(0.98f*acc_roll);
+  kom_angle_y=(0.98f*(norm_acc_y + norm_gyro_y*dt))+(0.98f*acc_pitch);
+
+  //Kalkulacja kątów X Y Z bez filtrów
+  bez_angle_x=bez_angle_x + norm_gyro_y*dt;
+  bez_angle_y=bez_angle_y + norm_gyro_y*dt;
+  bez_angle_z=bez_angle_z + norm_gyro_z*dt;
   pdt=millis();
   
-  // print out data
- String s =String(kal_angle_x)+" "+String(kal_angle_y)+" "+String(kal_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+  // print out data - odkomentować linijkę string s = ...
+
+   // Wypisywanie z filtrem komplementarnym
+//String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+   // Wypisywanie danych bez filtrowania
+// String s =String(bez_angle_x)+" "+String(bez_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
 Serial.println(s);
  s.toCharArray(Buf,50);
   Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
