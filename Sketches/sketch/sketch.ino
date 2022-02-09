@@ -5,6 +5,8 @@
 
 const char* ssid = "Pixel Hotspot"; //SSID Sieci
 const char* password = "thereisNOgod";  // Hasło Sieci
+//const char* ssid = "Piwnica"; //SSID Sieci
+//const char* password = "Koteczeq!";  // Hasło Sieci
 char Buf[50];
 WiFiUDP Udp;
 unsigned int localUdpPort = 4210;  // local port to listen on
@@ -216,10 +218,11 @@ KR_angle += KRdt * KR_rate;
   // Wypisywanie z filtrem kalmana
 //  String s =String(KP_angle)+" "+String(KR_angle)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
    // Wypisywanie danych bez filtrowania
-// String s =String(bez_angle_x)+" "+String(bez_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+ String s =String(bez_angle_x)+" "+String(bez_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
 Serial.println(s);
  s.toCharArray(Buf,50);
   Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
+  //Udp.beginPacket("192.168.0.205",54687); //Furia
   Udp.write(Buf);
   Udp.endPacket();
 }
