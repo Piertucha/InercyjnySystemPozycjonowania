@@ -33,7 +33,7 @@ double KP_angle = 0;
 double KP_bias = 0;
 
 
-double kPt = (double)millis();
+double kPt;
 
 double QR_angle=0.001;
 double QR_bias = 0.003;
@@ -42,7 +42,7 @@ double RR_measure = 0.03;
 double KR_angle = 0;
 double KR_bias = 0;
 
-double kRt = (double)millis();
+double kRt;
 
 
 void setup() {
@@ -58,11 +58,12 @@ PP[0][0]=0;
 PP[0][1]=0;
 PP[1][0]=0;
 PP[1][1]=0;
-
+kPt = (double)micros();
 PR[0][0]=0;
 PR[0][1]=0;
 PR[1][0]=0;
 PR[1][1]=0;
+kRt = (double)micros();
   Wire.beginTransmission(MPU_ADDR); 
   Wire.write(0x6B); 
   Wire.write(0); 
@@ -166,51 +167,51 @@ dt=(millis()-pdt)*0.001;
 
   //Kalkulacja Filtrem Kalmana
 //kalPitch
-KPdt=(millis()-kPt)*0.001;
+KPdt=(double)(micros()-kPt)/1000000;
 KP_rate = norm_gyro_x - KP_bias;
-KP_angle += KPdt * KP_rate;
+KP_angle = KP_angle + KPdt * KP_rate;
 
-    PP[0][0] += KPdt * (PP[1][1] + PP[0][1]) + QP_angle * KPdt;
-    PP[0][1] -= KPdt * PP[1][1];
-    PP[1][0] -= KPdt * PP[1][1];
-    PP[1][1] += QP_bias * KPdt;
+    PP[0][0] = PP[0][0] + KPdt * (PP[1][1] + PP[0][1]) + QP_angle * KPdt;
+    PP[0][1] = PP[0][1] - KPdt * PP[1][1];
+    PP[1][0] = PP[1][0] - KPdt * PP[1][1];
+    PP[1][1] = PP[1][1] + QP_bias * KPdt;
 
   SP= PP[0][0]+ RP_measure;
   KP[0] = PP[0][0] / SP;
   KP[1] = PP[1][0] / SP;
   yP= acc_pitch - KP_angle;
 
-  KP_angle += KP[0] * yP;
-  KP_bias += KP[1] * yP;
-    PP[0][0] -= KP[0] * PP[0][0];
-    PP[0][1] -= KP[0] * PP[0][1];
-    PP[1][0] -= KP[1] * PP[0][0];
-    PP[1][1] -= KP[1] * PP[0][1];
-    kPt = (double)millis();
+  KP_angle = KP_angle + KP[0] * yP;
+  KP_bias = KP_bias + KP[1] * yP;
+    PP[0][0] = PP[0][0]- KP[0] * PP[0][0];
+    PP[0][1] = PP[0][1] - KP[0] * PP[0][1];
+    PP[1][0] = PP[1][0] - KP[1] * PP[0][0];
+    PP[1][1] = PP[1][1] - KP[1] * PP[0][1];
+    kPt = (double)micros();
 
 
     //kalRoll
-    KRdt=(millis()-kRt)*0.001;
+    KRdt=(double)(micros()-kRt)/1000000;
 KR_rate = norm_gyro_y - KR_bias;
-KR_angle += KRdt * KR_rate;
+KR_angle = KR_angle + KRdt * KR_rate;
 
-    PR[0][0] += KRdt * (PR[1][1] + PR[0][1]) + QR_angle * KRdt;
-    PR[0][1] -= KRdt * PR[1][1];
-    PR[1][0] -= KRdt * PR[1][1];
-    PR[1][1] += QR_bias * KRdt;
+    PR[0][0] = PR[0][0] +KRdt * (PR[1][1] + PR[0][1]) + QR_angle * KRdt;
+    PR[0][1] = PR[0][1] - KRdt * PR[1][1];
+    PR[1][0] = PR[1][0] - KRdt * PR[1][1];
+    PR[1][1] = PR[1][1] + QR_bias * KRdt;
 
   SR= PR[0][0]+ RR_measure;
   KR[0] = PR[0][0] / SR;
   KR[1] = PR[1][0] / SR;
   yR= acc_roll - KR_angle;
 
-  KR_angle += KR[0] * yR;
-  KR_bias += KR[1] * yR;
-    PR[0][0] -= KR[0] * PR[0][0];
-    PR[0][1] -= KR[0] * PR[0][1];
-    PR[1][0] -= KR[1] * PR[0][0];
-    PR[1][1] -= KR[1] * PR[0][1];
-    kRt = (double)millis();
+  KR_angle = KR_angle + KR[0] * yR;
+  KR_bias = KR_bias + KR[1] * yR;
+    PR[0][0] = PR[0][0] - KR[0] * PR[0][0];
+    PR[0][1] = PR[0][1] - KR[0] * PR[0][1];
+    PR[1][0] = PR[1][0] - KR[1] * PR[0][0];
+    PR[1][1] = PR[1][1] - KR[1] * PR[0][1];
+    kRt = (double)micros();
   // print out data - odkomentować linijkę string s = ...
 
    // Wypisywanie z filtrem komplementarnym
