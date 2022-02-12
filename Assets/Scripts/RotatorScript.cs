@@ -21,7 +21,8 @@ public class RotatorScript : MonoBehaviour
     float xAngle = 0f;
     float yAngle = 0f;
     float zAngle = 0f;
-    
+    private float initialYAngle = 0f;
+
     float xForce = 0f;
     float yForce = 0f;
     float zForce = 0f;
@@ -113,7 +114,7 @@ public class RotatorScript : MonoBehaviour
             
             
             //transform.rotation = Quaternion.Euler(xAngle,yAngle,zAngle);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, yAngle, zAngle),
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle),
                 Time.deltaTime * 5f);
 
             //transform.rotation = Quaternion.Euler(eulers);
@@ -146,9 +147,9 @@ public class RotatorScript : MonoBehaviour
 
         forceVector = new Vector3(xForce - errorCompensator.x, yForce - errorCompensator.y, zForce - errorCompensator.z);
         //forceVector.y -= gravityCompensator.y;
-        forceVector -= Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
+        forceVector -= Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * gravityCompensator;
 
-        forceVector = Quaternion.Euler(xAngle, yAngle, zAngle) * forceVector;
+        forceVector = Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * forceVector;
         
         
         //forceVector += gravityCompensator.y * transform.up;
@@ -211,8 +212,8 @@ public class RotatorScript : MonoBehaviour
         xForce = float.Parse(sStrings[3]);
         zForce = float.Parse(sStrings[4]);
         yForce = float.Parse(sStrings[5]);
-        
-        Debug.Log(yAngle);
+
+        yAngle *= -1;
     }
 
     void ResetCapsuleTransform()
@@ -223,17 +224,22 @@ public class RotatorScript : MonoBehaviour
 
     void CalibrateGravity()
     {
+        float[] yAngleArray = new float[2000];
         Vector3 tempGravityRotated = Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
         for (int i = 0; i < 2000; i++)
         {
             xArray[i] = xForce - tempGravityRotated.x;
             yArray[i] = yForce - tempGravityRotated.y;
             zArray[i] = zForce - tempGravityRotated.z;
+
+            yAngleArray[i] = yAngle;
         }
 
         errorCompensator.x = xArray.Average();
         errorCompensator.y = yArray.Average();
         errorCompensator.z = zArray.Average();
+
+        initialYAngle = yAngleArray.Average();
         
         ResetCapsuleTransform();
         calibratingText.gameObject.SetActive(false);

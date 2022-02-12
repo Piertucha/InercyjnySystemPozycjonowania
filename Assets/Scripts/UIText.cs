@@ -19,11 +19,7 @@ public class UIText : MonoBehaviour
     void Update()
     {
         Text.SetText("Position: " + capsuleTransform.position.ToString()+ "\n"
-                                                                           +"Rotation: " + capsuleTransform.rotation.ToString()
-                                                                           + "\n"
-                                                                           + forceVector.x.ToString() + "\n"
-                                                                           + forceVector.y.ToString() + "\n"
-                                                                           + forceVector.z.ToString());
+                                                                           +"Rotation: " + capsuleTransform.rotation.eulerAngles.ToString());
         
         
     }
