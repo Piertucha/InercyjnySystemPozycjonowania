@@ -111,10 +111,10 @@ public class RotatorScript : MonoBehaviour
         else
         {
             //Vector3 eulers = new Vector3(xAngle, transform.rotation.y, zAngle);
-            
-            //yAngle = 0f;
+
+            //yAngle = yAngle / 2;
             //transform.rotation = Quaternion.Euler(xAngle,yAngle,zAngle);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle),
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, (yAngle - initialYAngle)/2, zAngle),
                 Time.deltaTime * 5f);
 
             //transform.rotation = Quaternion.Euler(eulers);
