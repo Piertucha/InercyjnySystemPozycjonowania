@@ -41,8 +41,6 @@ public class RotatorScript : MonoBehaviour
 
     public float forceScaling = 1f; // multiplies force
     public float rotationDampening = 1f; // divides angles
-    public bool rotateByAbsoluteValues = false;
-    public bool useKalmanFilter = true;
     public bool useNewFilter = false;
 
     private float rotationProgress = -1;
@@ -80,46 +78,8 @@ public class RotatorScript : MonoBehaviour
 
     public void Rotate()
     {
-        /*
-        if (rotationProgress < 1 && rotationProgress >= 0)
-        {
-            rotationProgress += Time.deltaTime * 5;
-        } */
-
-        //transform.rotation = Quaternion.Lerp(startRotation, endRotation, .1f);
-        // TEMP TEST
-        if (rotateByAbsoluteValues)
-        {
-            //dampen rotations
-            xAngle *= rotationDampening;
-            yAngle *= rotationDampening;
-            zAngle *= rotationDampening;
-            
-            //apply Kalman filter if toggled
-            if (useKalmanFilter)
-            {
-                xAngle = KalmanFilter.Update(xAngle);
-                yAngle = KalmanFilter.Update(yAngle);
-                zAngle = KalmanFilter.Update(zAngle);
-            }
-            
-
-            transform.Rotate(xAngle,yAngle,zAngle);
-            //Debug.Log(xAngle+" "+yAngle+" "+zAngle);
-
-        }
-        else
-        {
-            //Vector3 eulers = new Vector3(xAngle, transform.rotation.y, zAngle);
-
-            //yAngle = yAngle / 2;
-            //transform.rotation = Quaternion.Euler(xAngle,yAngle,zAngle);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, (yAngle - initialYAngle)/2, zAngle),
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, (yAngle - initialYAngle)/2, zAngle),
                 Time.deltaTime * 5f);
-
-            //transform.rotation = Quaternion.Euler(eulers);
-            //transform.Rotate(0,yAngle,0);
-        }
     }
     void StartRotating(float x, float y, float z)
     {
@@ -129,19 +89,6 @@ public class RotatorScript : MonoBehaviour
 
     void Accelerate()
     {
-        // scale forces
-        /*
-        xForce *= forceScaling;
-        yForce *= forceScaling;
-        zForce *= forceScaling;
-        */
-        // use Kalman filter if toggled
-        if (useKalmanFilter)
-        {
-            xForce = KalmanFilter.Update(xForce);
-            yForce = KalmanFilter.Update(yForce);
-            zForce = KalmanFilter.Update(zForce);
-        }
 
 
 
