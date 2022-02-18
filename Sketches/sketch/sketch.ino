@@ -58,12 +58,12 @@ PP[0][0]=0;
 PP[0][1]=0;
 PP[1][0]=0;
 PP[1][1]=0;
-kPt = (double)micros();
+
 PR[0][0]=0;
 PR[0][1]=0;
 PR[1][0]=0;
 PR[1][1]=0;
-kRt = (double)micros();
+
   Wire.beginTransmission(MPU_ADDR); 
   Wire.write(0x6B); 
   Wire.write(0); 
@@ -123,6 +123,8 @@ Serial.println(x);
   Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
 
   pdt=millis();
+  kPt = (double)micros();
+  kRt = (double)micros();
 }
 void loop() {
   //Odczyt surowych danych z MPU6050
@@ -163,6 +165,7 @@ dt=(millis()-pdt)*0.001;
   bez_angle_x=bez_angle_x + norm_gyro_x*dt;
   bez_angle_y=bez_angle_y + norm_gyro_y*dt;
   bez_angle_z=bez_angle_z + norm_gyro_z*dt;
+  bez_angle_z=bez_angle_z/2;
   pdt=millis();
 
   //Kalkulacja Filtrem Kalmana
@@ -217,7 +220,7 @@ KR_angle = KR_angle + KRdt * KR_rate;
    // Wypisywanie z filtrem komplementarnym
 String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
   // Wypisywanie z filtrem kalmana
-  //String s =String(KP_angle)+" "+String(KR_angle)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+ // String s =String(KP_angle)+" "+String(KR_angle)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
    // Wypisywanie danych bez filtrowania
  //String s =String(bez_angle_x)+" "+String(bez_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
 Serial.println(s);
