@@ -17,6 +17,8 @@ public class RotatorScript : MonoBehaviour
     private float[] zArray = new float[2000];
     
     public float forceMargin = 0.2f;
+    
+    public bool freezeZRotation = false;
 
     float xAngle = 0f;
     float yAngle = 0f;
@@ -78,6 +80,9 @@ public class RotatorScript : MonoBehaviour
 
     public void Rotate()
     {
+        if (freezeZRotation)
+            yAngle = 0f;
+        
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, (yAngle - initialYAngle)/2, zAngle),
                 Time.deltaTime * 5f);
     }
