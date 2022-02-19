@@ -21,9 +21,7 @@ float pdt, dt;
 double PP[2][2],PR[2][2], KP[2], KR[2];
 double SP, SR, yP, yR;
 double KP_rate, KR_rate;
-float KPdt,KRdt;
 String s;
-
 
 double QP_angle=0.001;
 double QP_bias = 0.003;
@@ -32,18 +30,12 @@ double RP_measure = 0.03;
 double KP_angle = 0;
 double KP_bias = 0;
 
-
-double kPt;
-
 double QR_angle=0.001;
 double QR_bias = 0.003;
 double RR_measure = 0.03;
 
 double KR_angle = 0;
 double KR_bias = 0;
-
-double kRt;
-
 
 void setup() {
   Serial.begin(9600);
@@ -123,8 +115,6 @@ Serial.println(x);
   Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
 
   pdt=millis();
-  kPt = (double)micros();
-  kRt = (double)micros();
 }
 void loop() {
   //Odczyt surowych danych z MPU6050
@@ -166,18 +156,18 @@ dt=(millis()-pdt)*0.001;
   bez_angle_y=bez_angle_y + norm_gyro_y*dt;
   bez_angle_z=bez_angle_z + norm_gyro_z*dt;
   bez_angle_z=bez_angle_z/2;
-  pdt=millis();
+ 
 
   //Kalkulacja Filtrem Kalmana
 //kalPitch
-KPdt=(double)(micros()-kPt)/1000000;
-KP_rate = norm_gyro_x - KP_bias;
-KP_angle = KP_angle + KPdt * KP_rate;
 
-    PP[0][0] = PP[0][0] + KPdt * (PP[1][1] + PP[0][1]) + QP_angle * KPdt;
-    PP[0][1] = PP[0][1] - KPdt * PP[1][1];
-    PP[1][0] = PP[1][0] - KPdt * PP[1][1];
-    PP[1][1] = PP[1][1] + QP_bias * KPdt;
+KP_rate = norm_gyro_x - KP_bias;
+KP_angle = KP_angle + dt * KP_rate;
+
+    PP[0][0] = PP[0][0] + dt * (PP[1][1] + PP[0][1]) + QP_angle * dt;
+    PP[0][1] = PP[0][1] - dt * PP[1][1];
+    PP[1][0] = PP[1][0] - dt * PP[1][1];
+    PP[1][1] = PP[1][1] + QP_bias * dt;
 
   SP= PP[0][0]+ RP_measure;
   KP[0] = PP[0][0] / SP;
@@ -190,18 +180,18 @@ KP_angle = KP_angle + KPdt * KP_rate;
     PP[0][1] = PP[0][1] - KP[0] * PP[0][1];
     PP[1][0] = PP[1][0] - KP[1] * PP[0][0];
     PP[1][1] = PP[1][1] - KP[1] * PP[0][1];
-    kPt = (double)micros();
+
 
 
     //kalRoll
-    KRdt=(double)(micros()-kRt)/1000000;
-KR_rate = norm_gyro_y - KR_bias;
-KR_angle = KR_angle + KRdt * KR_rate;
 
-    PR[0][0] = PR[0][0] +KRdt * (PR[1][1] + PR[0][1]) + QR_angle * KRdt;
-    PR[0][1] = PR[0][1] - KRdt * PR[1][1];
-    PR[1][0] = PR[1][0] - KRdt * PR[1][1];
-    PR[1][1] = PR[1][1] + QR_bias * KRdt;
+KR_rate = norm_gyro_y - KR_bias;
+KR_angle = KR_angle + dt * KR_rate;
+
+    PR[0][0] = PR[0][0] +dt * (PR[1][1] + PR[0][1]) + QR_angle * dt;
+    PR[0][1] = PR[0][1] - dt * PR[1][1];
+    PR[1][0] = PR[1][0] - dt * PR[1][1];
+    PR[1][1] = PR[1][1] + QR_bias * dt;
 
   SR= PR[0][0]+ RR_measure;
   KR[0] = PR[0][0] / SR;
@@ -214,7 +204,7 @@ KR_angle = KR_angle + KRdt * KR_rate;
     PR[0][1] = PR[0][1] - KR[0] * PR[0][1];
     PR[1][0] = PR[1][0] - KR[1] * PR[0][0];
     PR[1][1] = PR[1][1] - KR[1] * PR[0][1];
-    kRt = (double)micros();
+       pdt=millis();
   // print out data - odkomentować linijkę string s = ...
 
    // Wypisywanie z filtrem komplementarnym
@@ -229,4 +219,5 @@ Serial.println(s);
   Udp.beginPacket("192.168.0.206",54687); //Piwnica
   Udp.write(Buf);
   Udp.endPacket();
+
 }
