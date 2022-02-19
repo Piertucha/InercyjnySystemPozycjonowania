@@ -208,11 +208,11 @@ KR_angle = KR_angle + dt * KR_rate;
   // print out data - odkomentować linijkę string s = ...
 
    // Wypisywanie z filtrem komplementarnym
-String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+//String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
   // Wypisywanie z filtrem kalmana
  // String s =String(KP_angle)+" "+String(KR_angle)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
    // Wypisywanie danych bez filtrowania
- //String s =String(bez_angle_x)+" "+String(bez_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+ String s =String(bez_angle_x)+" "+String(bez_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
 Serial.println(s);
  s.toCharArray(Buf,50);
   //Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
