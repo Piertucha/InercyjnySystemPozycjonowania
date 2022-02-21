@@ -155,7 +155,7 @@ dt=(millis()-pdt)*0.001;
   bez_angle_x=bez_angle_x + norm_gyro_x*dt;
   bez_angle_y=bez_angle_y + norm_gyro_y*dt;
   bez_angle_z=bez_angle_z + norm_gyro_z*dt;
-  bez_angle_z=bez_angle_z/2;
+  bez_angle_z=bez_angle_z/2.0f;
  
 
   //Kalkulacja Filtrem Kalmana
