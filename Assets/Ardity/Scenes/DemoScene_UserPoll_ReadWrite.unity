@@ -900,7 +900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   calibratingText: {fileID: 1967379958}
   forceMargin: 0
-  freezeZRotation: 1
+  freezeZRotation: 0
   gravityCompensator: {x: 0, y: 9.81, z: 0}
   errorCompensator: {x: 0, y: 0, z: 0}
   uiText: {fileID: 838320576}
