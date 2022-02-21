@@ -83,7 +83,7 @@ public class RotatorScript : MonoBehaviour
         if (freezeZRotation)
             yAngle = 0f;
         
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, (yAngle - initialYAngle)/2, zAngle),
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle),
                 Time.deltaTime * 5f);
     }
     void StartRotating(float x, float y, float z)
