@@ -215,7 +215,7 @@ KR_angle = KR_angle + dt * KR_rate;
 Serial.println(s);
  s.toCharArray(Buf,50);
   //Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
-  Udp.beginPacket("192.168.0.206",54687); //Piwnica
+  Udp.beginPacket("192.168.0.205",54687); //Piwnica
   Udp.write(Buf);
   Udp.endPacket();
 
