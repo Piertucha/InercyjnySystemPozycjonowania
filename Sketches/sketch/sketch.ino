@@ -154,7 +154,10 @@ dt=(millis()-pdt)*0.001;
   //Kalkulacja kątów X Y Z bez filtrów
   bez_angle_x=bez_angle_x + norm_gyro_x*dt;
   bez_angle_y=bez_angle_y + norm_gyro_y*dt;
-  bez_angle_z=(bez_angle_z + norm_gyro_z*dt)/2.0f;
+  //bez_angle_z=(bez_angle_z + norm_gyro_z*dt)/2.0f;
+  bez_angle_z=bez_angle_z + norm_gyro_z*dt;
+
+
  
 
   //Kalkulacja Filtrem Kalmana
@@ -207,9 +210,9 @@ KR_angle = KR_angle + dt * KR_rate;
   // print out data - odkomentować linijkę string s = ...
 
    // Wypisywanie z filtrem komplementarnym
-//String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
   // Wypisywanie z filtrem kalmana
-  String s =String(KP_angle)+" "+String(KR_angle)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
+  //String s =String(KP_angle)+" "+String(KR_angle)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
    // Wypisywanie danych bez filtrowania
  //String s =String(bez_angle_x)+" "+String(bez_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
 Serial.println(s);
