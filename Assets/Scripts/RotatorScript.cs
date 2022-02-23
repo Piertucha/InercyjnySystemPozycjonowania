@@ -25,6 +25,9 @@ public class RotatorScript : MonoBehaviour
     float yAngle = 0f;
     float zAngle = 0f;
     private float initialYAngle = 0f;
+    private float dt = 0.0374f;
+    private float dtSquared;
+    private Vector3 displacementVector = Vector3.zero;
 
     
     // acceleration
@@ -40,12 +43,6 @@ public class RotatorScript : MonoBehaviour
     private Vector3 errorCompensator = new Vector3(0, 0, 0);
 
     public UIText uiText;
-    
-    // Kalman Filter values
-    [Header("Kalman Filter")]
-    public float q = 0.000001f;
-    public float r = 0.01f;
-    [Space(20)]
 
     public float forceScaling = 1f; // multiplies force
     public float rotationDampening = 1f; // divides angles
@@ -63,9 +60,10 @@ public class RotatorScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dtSquared  = dt * dt;
         transform = gameObject.transform;
         rb = gameObject.GetComponent<Rigidbody>();
-        KalmanFilter = new KalmanFilterFloat(q, r);
+
 
         StartCoroutine(WaitXTime(5));
 
@@ -104,6 +102,10 @@ public class RotatorScript : MonoBehaviour
 
     void Accelerate()
     {
+        // double integral to get displacement
+        //displacementVector = new Vector3(xForce * dtSquared, yForce * dtSquared, zForce * dtSquared);
+        
+        
         if (useErrorCorrectionVector)
         {
             forceVector = new Vector3(xForce - errorCompensator.x, yForce - errorCompensator.y, zForce - errorCompensator.z);
@@ -117,7 +119,11 @@ public class RotatorScript : MonoBehaviour
         //forceVector -= Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
 
         forceVector = Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * forceVector;
+        
+        // double integral to get displacement
+        displacementVector = forceVector * dtSquared;
 
+        
 
         uiText.forceVector = forceVector;
         
@@ -128,7 +134,7 @@ public class RotatorScript : MonoBehaviour
         currentAcceleration *= forceScaling;
         
         //transform.Translate(currentAcceleration);
-        
+        transform.position += displacementVector;
         //forceVector = Vector3.zero;
     }
 

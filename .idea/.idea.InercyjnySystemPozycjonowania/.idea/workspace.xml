@@ -4,7 +4,7 @@
     <list default="true" id="dcb54e58-ce62-4dca-99fe-8e1fdd9094af" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.InercyjnySystemPozycjonowania/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InercyjnySystemPozycjonowania/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/ApiUpdaterCheck.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,9 +14,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/DoubleIntegration.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/KalmanFilter.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/DoubleIntegration.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" />
     </changedPaths>
   </component>
@@ -101,6 +105,7 @@
       <workItem from="1645436192141" duration="196000" />
       <workItem from="1645618269858" duration="365000" />
       <workItem from="1645619248879" duration="313000" />
+      <workItem from="1645650668272" duration="2773000" />
     </task>
     <servers />
   </component>
@@ -110,6 +115,17 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
