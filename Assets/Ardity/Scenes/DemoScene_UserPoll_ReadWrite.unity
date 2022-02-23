@@ -901,13 +901,14 @@ MonoBehaviour:
   calibratingText: {fileID: 1967379958}
   forceMargin: 0
   freezeZRotation: 0
+  useErrorCorrectionVector: 1
   accSmooth: 0.4
   gravityCompensator: {x: 0, y: 9.81, z: 0}
   errorCompensator: {x: 0, y: 0, z: 0}
   uiText: {fileID: 838320576}
   q: 0.000001
   r: 0.01
-  forceScaling: 0.3
+  forceScaling: 1
   rotationDampening: 1
   useNewFilter: 0
 --- !u!136 &1122630984

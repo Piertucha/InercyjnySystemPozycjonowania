@@ -19,6 +19,7 @@ public class RotatorScript : MonoBehaviour
     public float forceMargin = 0.2f;
     
     public bool freezeZRotation = false;
+    public bool useErrorCorrectionVector = false;
 
     float xAngle = 0f;
     float yAngle = 0f;
@@ -92,7 +93,7 @@ public class RotatorScript : MonoBehaviour
         if (freezeZRotation)
             yAngle = 0f;
         
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle),
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(xAngle, (yAngle - initialYAngle) / 2f, zAngle),
                 Time.deltaTime * 5f);
     }
     void StartRotating(float x, float y, float z)
@@ -103,24 +104,32 @@ public class RotatorScript : MonoBehaviour
 
     void Accelerate()
     {
-        
-        forceVector = new Vector3(xForce - errorCompensator.x, yForce - errorCompensator.y, zForce - errorCompensator.z);
+        if (useErrorCorrectionVector)
+        {
+            forceVector = new Vector3(xForce - errorCompensator.x, yForce - errorCompensator.y, zForce - errorCompensator.z);
+        }
+        else
+        {
+            forceVector = new Vector3(xForce, yForce, zForce);
+        }
+
         forceVector -= Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * gravityCompensator;
+        //forceVector -= Quaternion.Euler(xAngle, yAngle, zAngle) * gravityCompensator;
 
         forceVector = Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * forceVector;
 
 
         uiText.forceVector = forceVector;
         
-        if(useNewFilter)
-            rb.AddForce(NewFilter(forceVector * forceScaling));
-        else
-        {
-            //rb.AddForce(forceVector * forceScaling);
-            currentAcceleration = Vector3.Lerp(currentAcceleration, forceVector, Time.deltaTime / accSmooth); //trying new acceleration method
-            transform.Translate(currentAcceleration);
-        }
-        forceVector = Vector3.zero;
+        
+        //rb.AddForce(forceVector * forceScaling);
+        currentAcceleration = Vector3.Lerp(currentAcceleration, forceVector, Time.deltaTime / accSmooth); //trying new acceleration method
+
+        currentAcceleration *= forceScaling;
+        
+        //transform.Translate(currentAcceleration);
+        
+        //forceVector = Vector3.zero;
     }
 
     public void GetMessageFromHardware(string message)
