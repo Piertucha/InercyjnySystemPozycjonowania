@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dcb54e58-ce62-4dca-99fe-8e1fdd9094af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" afterDir="false" />
-    </list>
+    <list default="true" id="dcb54e58-ce62-4dca-99fe-8e1fdd9094af" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,6 +96,7 @@
       <workItem from="1645038233720" duration="656000" />
       <workItem from="1645436192141" duration="196000" />
       <workItem from="1645618269858" duration="365000" />
+      <workItem from="1645619248879" duration="313000" />
     </task>
     <servers />
   </component>

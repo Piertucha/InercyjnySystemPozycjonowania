@@ -105,7 +105,6 @@ public class RotatorScript : MonoBehaviour
     {
         
         forceVector = new Vector3(xForce - errorCompensator.x, yForce - errorCompensator.y, zForce - errorCompensator.z);
-        //forceVector.y -= gravityCompensator.y;
         forceVector -= Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * gravityCompensator;
 
         forceVector = Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * forceVector;
@@ -119,6 +118,7 @@ public class RotatorScript : MonoBehaviour
         {
             //rb.AddForce(forceVector * forceScaling);
             currentAcceleration = Vector3.Lerp(currentAcceleration, forceVector, Time.deltaTime / accSmooth); //trying new acceleration method
+            transform.Translate(currentAcceleration);
         }
         forceVector = Vector3.zero;
     }

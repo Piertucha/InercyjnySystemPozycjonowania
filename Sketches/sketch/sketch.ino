@@ -218,7 +218,8 @@ String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" 
 Serial.println(s);
  s.toCharArray(Buf,50);
   //Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
-  Udp.beginPacket("192.168.0.205",54687); //Piwnica
+  //Udp.beginPacket("192.168.0.205",54687); //Piwnica
+  Udp.beginPacket("192.168.0.101",54687); // PC
   Udp.write(Buf);
   Udp.endPacket();
 
