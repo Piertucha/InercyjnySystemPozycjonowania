@@ -25,6 +25,11 @@ public class RotatorScript : MonoBehaviour
     float zAngle = 0f;
     private float initialYAngle = 0f;
 
+    
+    // acceleration
+    public float accSmooth = 0.4f;
+    private Vector3 currentAcceleration, initialAcceleration;
+
     float xForce = 0f;
     float yForce = 0f;
     float zForce = 0f;
@@ -62,12 +67,16 @@ public class RotatorScript : MonoBehaviour
         KalmanFilter = new KalmanFilterFloat(q, r);
 
         StartCoroutine(WaitXTime(5));
+
+        //initialAcceleration = gravityCompensator;
+        currentAcceleration = Vector3.zero;
+        
     }
 
     private void Update()
     {
         Rotate();
-        
+        Accelerate();
         if(Input.GetKeyDown(KeyCode.R))
             ResetCapsuleTransform();
     }
@@ -75,7 +84,7 @@ public class RotatorScript : MonoBehaviour
     private void FixedUpdate()
     {
        //StartRotating(xAngle, yAngle, zAngle);
-        Accelerate();
+        //Accelerate();
     }
 
     public void Rotate()
@@ -94,53 +103,23 @@ public class RotatorScript : MonoBehaviour
 
     void Accelerate()
     {
-
-
-
+        
         forceVector = new Vector3(xForce - errorCompensator.x, yForce - errorCompensator.y, zForce - errorCompensator.z);
         //forceVector.y -= gravityCompensator.y;
         forceVector -= Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * gravityCompensator;
 
         forceVector = Quaternion.Euler(xAngle, yAngle - initialYAngle, zAngle) * forceVector;
-        
-        
-        //forceVector += gravityCompensator.y * transform.up;
-        /*
-        forceVector += new Vector3(gravityCompensator.y * Vector3.Dot(transform.right,
-                Vector3.down), gravityCompensator.y * Vector3.Dot(transform.up, Vector3.up), gravityCompensator.y *
-            Vector3.Dot(transform.forward,
-                Vector3.down));*/
 
 
         uiText.forceVector = forceVector;
-/*
-        if (forceVector.x <= forceMargin && forceVector.x >= -forceMargin)
-        {
-            forceVector.x = 0;
-        }
-        if (forceVector.y <= forceMargin && forceVector.y >= -forceMargin)
-        {
-            forceVector.y = 0;
-        }
-        if (forceVector.z <= forceMargin && forceVector.z >= -forceMargin)
-        {
-            forceVector.z = 0;
-        }*/
-        
-
-        //rb.velocity += forceVector * forceScaling;
-        
-        //rb.AddForce(forceVector * forceScaling);
-        
         
         if(useNewFilter)
             rb.AddForce(NewFilter(forceVector * forceScaling));
         else
         {
-            rb.AddForce(forceVector * forceScaling);
+            //rb.AddForce(forceVector * forceScaling);
+            currentAcceleration = Vector3.Lerp(currentAcceleration, forceVector, Time.deltaTime / accSmooth); //trying new acceleration method
         }
-        //rb.AddForce(forceVector * forceScaling, ForceMode.Impulse);
-        //rb.AddForceAtPosition(forceVector,transform.position);
         forceVector = Vector3.zero;
     }
 
