@@ -4,7 +4,7 @@
 #include "Wire.h" // 
 
 const char* ssid = "SSID"; //SSID Sieci
-const char* password = "password!";  // Hasło Sieci
+const char* password = "password";  // Hasło Sieci
 const char* ip = "192.168.0.101"; // IP odbiornika
 char Buf[50];
 WiFiUDP Udp;
