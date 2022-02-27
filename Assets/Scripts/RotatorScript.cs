@@ -15,9 +15,7 @@ public class RotatorScript : MonoBehaviour
     private float[] yArray = new float[2000];
     private float[] xArray = new float[2000];
     private float[] zArray = new float[2000];
-    
-    public float forceMargin = 0.2f;
-    
+
     public bool freezeZRotation = false;
     public bool useErrorCorrectionVector = false;
 
@@ -45,8 +43,6 @@ public class RotatorScript : MonoBehaviour
     public UIText uiText;
 
     public float forceScaling = 1f; // multiplies force
-    public float rotationDampening = 1f; // divides angles
-    public bool useNewFilter = false;
 
     private float rotationProgress = -1;
 
@@ -54,8 +50,7 @@ public class RotatorScript : MonoBehaviour
 
     private Quaternion startRotation;
     private Quaternion endRotation;
-
-    public KalmanFilterFloat KalmanFilter;
+    
 
     // Start is called before the first frame update
     void Start()

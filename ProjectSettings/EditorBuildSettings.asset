@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Ardity/Scenes/DemoScene_UserPoll_ReadWrite.unity
+    guid: 483dfd9088375b94380a7c4999c98acb
   m_configObjects: {}
