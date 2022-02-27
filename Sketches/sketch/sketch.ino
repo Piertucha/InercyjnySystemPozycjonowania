@@ -5,6 +5,7 @@
 
 const char* ssid = "SSID"; //SSID Sieci
 const char* password = "password!";  // Hasło Sieci
+const char* ip = "192.168.0.101"; // IP odbiornika
 char Buf[50];
 WiFiUDP Udp;
 unsigned int localUdpPort = 4210;  // local port to listen on
@@ -216,7 +217,7 @@ String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" 
 Serial.println(s);
  s.toCharArray(Buf,50);
 
-  Udp.beginPacket("192.168.0.101",54687);
+  Udp.beginPacket("ip",54687);
   Udp.write(Buf);
   Udp.endPacket();
 
