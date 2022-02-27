@@ -3,10 +3,8 @@
 #include <WiFiUdp.h>
 #include "Wire.h" // 
 
-//const char* ssid = "Pixel Hotspot"; //SSID Sieci
-//const char* password = "thereisNOgod";  // Hasło Sieci
-const char* ssid = "Piwnica 2.4"; //SSID Sieci
-const char* password = "Koteczeq!";  // Hasło Sieci
+const char* ssid = "SSID"; //SSID Sieci
+const char* password = "password!";  // Hasło Sieci
 char Buf[50];
 WiFiUDP Udp;
 unsigned int localUdpPort = 4210;  // local port to listen on
@@ -217,9 +215,8 @@ String s =String(kom_angle_x)+" "+String(kom_angle_y)+" "+String(bez_angle_z)+" 
  //String s =String(bez_angle_x)+" "+String(bez_angle_y)+" "+String(bez_angle_z)+" "+ String(norm_acc_x)+" "+ String(norm_acc_y)+" "+String(norm_acc_z);
 Serial.println(s);
  s.toCharArray(Buf,50);
-  //Udp.beginPacket("192.168.173.113",54687); //Ip i port odbiornika
-  //Udp.beginPacket("192.168.0.205",54687); //Piwnica
-  Udp.beginPacket("192.168.0.101",54687); // PC
+
+  Udp.beginPacket("192.168.0.101",54687);
   Udp.write(Buf);
   Udp.endPacket();
 
