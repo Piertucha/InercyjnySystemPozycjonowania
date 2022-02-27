@@ -17,6 +17,7 @@ public class RotatorScript : MonoBehaviour
     private float[] zArray = new float[2000];
 
     public bool freezeZRotation = false;
+    public bool freezeMovement = false;
     public bool useErrorCorrectionVector = false;
 
     float xAngle = 0f;
@@ -117,19 +118,25 @@ public class RotatorScript : MonoBehaviour
         
         // double integral to get displacement
         displacementVector = forceVector * dtSquared;
+        displacementVector *= forceScaling;
 
         
 
         uiText.forceVector = forceVector;
         
         
-        //rb.AddForce(forceVector * forceScaling);
+        
         currentAcceleration = Vector3.Lerp(currentAcceleration, forceVector, Time.deltaTime / accSmooth); //trying new acceleration method
 
         currentAcceleration *= forceScaling;
         
-        //transform.Translate(currentAcceleration);
-        transform.position += displacementVector;
+        
+        if (!freezeMovement)
+        {
+            //transform.Translate(currentAcceleration);
+            //rb.AddForce(forceVector * forceScaling);
+            transform.position += displacementVector;
+        }
         //forceVector = Vector3.zero;
     }
 

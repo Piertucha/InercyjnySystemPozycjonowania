@@ -3,20 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="dcb54e58-ce62-4dca-99fe-8e1fdd9094af" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.InercyjnySystemPozycjonowania/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InercyjnySystemPozycjonowania/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_AutoPoll.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_AutoPoll.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_CustomDelimiter.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_CustomDelimiter.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_TearDown.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_TearDown.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_UserPoll_JustRead.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_UserPoll_JustRead.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DoubleIntegration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DoubleIntegration.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_UserPoll_ReadWrite.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ardity/Scenes/DemoScene_UserPoll_ReadWrite.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UDPListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UDPListener.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,6 +21,7 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/KalmanFilter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/DoubleIntegration.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UDPListener.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/RotatorScript.cs" />
     </changedPaths>
   </component>
@@ -117,6 +108,7 @@
       <workItem from="1645619248879" duration="313000" />
       <workItem from="1645650668272" duration="2773000" />
       <workItem from="1645984855016" duration="357000" />
+      <workItem from="1645985232424" duration="1493000" />
     </task>
     <servers />
   </component>

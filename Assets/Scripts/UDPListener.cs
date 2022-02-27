@@ -41,7 +41,7 @@ public class UDPListener : MonoBehaviour
         byte[] sendBytes = Encoding.ASCII.GetBytes("Is anybody there");
         //clientData.Send(sendBytes,sendBytes.Length, "192.168.173.78", 4210);
         // Piwnica v
-        clientData.Send(sendBytes,sendBytes.Length, "192.168.0.218", 4210);
+        //clientData.Send(sendBytes,sendBytes.Length, "192.168.0.218", 4210);
     }
 
     void ReceivedUDPPacket(System.IAsyncResult result)
